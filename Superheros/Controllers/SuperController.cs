@@ -25,7 +25,6 @@ namespace Superheros.Controllers
         public ActionResult Details(int id)
         {
             ViewBag.heroId = new SelectList(db.Heroes);
-            //id = db.Heroes.Where(h => h.Name);
             return View();
         }
 
@@ -54,28 +53,27 @@ namespace Superheros.Controllers
         }
 
         // GET: Super/Edit/5
-        public ActionResult Edit(int id, Hero hero)
+        public ActionResult Edit(int id)
         {
-            //Employee thisEmployee = db.Employees.Where(e => e.EmployeeId == employee.EmployeeId).Single();
             ViewBag.heroId = new SelectList(db.Heroes);
-            Hero thisHero = db.Heroes.Where(h => h.HeroId == hero.HeroId).single();
-            thisHero.Name = hero.Name;
-            thisHero.AlterEgo = hero.AlterEgo;
-            thisHero.PrimarySuperHeroAbility = hero.PrimarySuperHeroAbility;
-            thisHero.SecondarySuperHeroAbility = hero.SecondarySuperHeroAbility;
-            thisHero.CatchPhrase = hero.CatchPhrase;
-            db.SaveChanges();
             return View();
         }
 
         // POST: Super/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, FormCollection collection, Hero hero)
         {
             try
             {
                 // TODO: Add update logic here
-
+                //ViewBag.heroId = new SelectList(db.heros);
+                Hero thisHero = db.Heroes.Where(h => h.Name == hero.Name).Single();
+                thisHero.Name = hero.Name;
+                thisHero.AlterEgo = hero.AlterEgo;
+                thisHero.PrimarySuperHeroAbility = hero.PrimarySuperHeroAbility;
+                thisHero.SecondarySuperHeroAbility = hero.SecondarySuperHeroAbility;
+                thisHero.CatchPhrase = hero.CatchPhrase;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             catch
