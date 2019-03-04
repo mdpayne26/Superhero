@@ -24,7 +24,7 @@ namespace Superheros.Controllers
         // GET: Super/Details/5
         public ActionResult Details(int id)
         {
-            ViewBag.heroId = new SelectList(db.Heroes);
+            List<Hero> ListofSuperheros = db.Heroes.ToList();
             return View();
         }
 
@@ -55,7 +55,7 @@ namespace Superheros.Controllers
         // GET: Super/Edit/5
         public ActionResult Edit(int id)
         {
-            ViewBag.heroId = new SelectList(db.Heroes);
+            List<Hero> ListofSuperheros = db.Heroes.ToList();
             return View();
         }
 
@@ -67,7 +67,7 @@ namespace Superheros.Controllers
             {
                 // TODO: Add update logic here
                 //ViewBag.heroId = new SelectList(db.heros);
-                Hero thisHero = db.Heroes.Where(h => h.Name == hero.Name).Single();
+                Hero thisHero = db.Heroes.Find(id);
                 thisHero.Name = hero.Name;
                 thisHero.AlterEgo = hero.AlterEgo;
                 thisHero.PrimarySuperHeroAbility = hero.PrimarySuperHeroAbility;
@@ -85,8 +85,7 @@ namespace Superheros.Controllers
         // GET: Super/Delete/5
         public ActionResult Delete(int id, Hero hero)
         {
-            hero = db.Heroes.Where(h => h.Name == hero.Name).First();
-            return View();
+            return View(db.Heroes.Find(id));
         }
 
         // POST: Super/Delete/5
@@ -96,8 +95,10 @@ namespace Superheros.Controllers
             try
             {
                 // TODO: Add delete logic here
-                hero = db.Heroes.Where(h => h.Name == hero.Name).First();
-                db.Heroes.Remove(hero);
+                //List<Hero> ListofSuperheros = db.Heroes.ToList();
+                //hero = db.Heroes.Where(h => h.Id == hero.Id && h.Name == hero.Name).First();
+
+                db.Heroes.Remove(db.Heroes.Find(id));
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
