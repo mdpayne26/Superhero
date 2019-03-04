@@ -83,8 +83,11 @@ namespace Superheros.Controllers
         }
 
         // GET: Super/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int id, Hero hero)
         {
+            hero = db.Heroes.Where(h => h.Name == hero.Name).First();
+            db.Heroes.Remove(hero);
+            db.SaveChanges();
             return View();
         }
 
