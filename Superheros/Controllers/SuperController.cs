@@ -24,8 +24,8 @@ namespace Superheros.Controllers
         // GET: Super/Details/5
         public ActionResult Details(int id)
         {
-            List<Hero> ListofSuperheros = db.Heroes.ToList();
-            return View();
+            
+            return View(db.Heroes.Find(id));
         }
 
         // GET: Super/Create
