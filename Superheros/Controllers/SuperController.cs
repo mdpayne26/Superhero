@@ -17,8 +17,8 @@ namespace Superheros.Controllers
         // GET: Super
         public ActionResult Index()
         {
-            ViewBag.heroId = new SelectList(db.Heroes);
-            return View();
+            List<Hero> ListofSuperheros = db.Heroes.ToList();
+            return View(ListofSuperheros);
         }
 
         // GET: Super/Details/5
@@ -31,7 +31,7 @@ namespace Superheros.Controllers
         // GET: Super/Create
         public ActionResult Create()
         {
-            ViewBag.heroId = new SelectList(db.Heroes);
+            //ViewBag.heroId = new SelectList(db.Heroes);
             return View();
         }
 
@@ -86,19 +86,19 @@ namespace Superheros.Controllers
         public ActionResult Delete(int id, Hero hero)
         {
             hero = db.Heroes.Where(h => h.Name == hero.Name).First();
-            db.Heroes.Remove(hero);
-            db.SaveChanges();
             return View();
         }
 
         // POST: Super/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id, FormCollection collection, Hero hero)
         {
             try
             {
                 // TODO: Add delete logic here
-
+                hero = db.Heroes.Where(h => h.Name == hero.Name).First();
+                db.Heroes.Remove(hero);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             catch

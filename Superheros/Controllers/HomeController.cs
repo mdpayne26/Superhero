@@ -26,5 +26,11 @@ namespace Superheros.Controllers
 
             return View();
         }
+        public ActionResult SuperHeros()
+        {
+            ViewBag.Message = "your supers list.";
+
+            return View();
+        }
     }
 }
