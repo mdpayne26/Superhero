@@ -25,6 +25,7 @@ namespace Superheros.Controllers
         public ActionResult Details(int id)
         {
             ViewBag.heroId = new SelectList(db.Heroes);
+            //id = db.Heroes.Where(h => h.Name);
             return View();
         }
 
@@ -42,7 +43,8 @@ namespace Superheros.Controllers
             try
             {
                 // TODO: Add insert logic here
-
+                db.Heroes.Add(hero);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             catch
@@ -52,8 +54,17 @@ namespace Superheros.Controllers
         }
 
         // GET: Super/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int id, Hero hero)
         {
+            //Employee thisEmployee = db.Employees.Where(e => e.EmployeeId == employee.EmployeeId).Single();
+            ViewBag.heroId = new SelectList(db.Heroes);
+            Hero thisHero = db.Heroes.Where(h => h.HeroId == hero.HeroId).single();
+            thisHero.Name = hero.Name;
+            thisHero.AlterEgo = hero.AlterEgo;
+            thisHero.PrimarySuperHeroAbility = hero.PrimarySuperHeroAbility;
+            thisHero.SecondarySuperHeroAbility = hero.SecondarySuperHeroAbility;
+            thisHero.CatchPhrase = hero.CatchPhrase;
+            db.SaveChanges();
             return View();
         }
 
