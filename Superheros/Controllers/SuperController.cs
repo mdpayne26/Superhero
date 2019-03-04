@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Superheros.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,27 +9,35 @@ namespace Superheros.Controllers
 {
     public class SuperController : Controller
     {
+        ApplicationDbContext db;
+        public SuperController()
+        {
+            db = new ApplicationDbContext();
+        }
         // GET: Super
         public ActionResult Index()
         {
+            ViewBag.heroId = new SelectList(db.Heroes);
             return View();
         }
 
         // GET: Super/Details/5
         public ActionResult Details(int id)
         {
+            ViewBag.heroId = new SelectList(db.Heroes);
             return View();
         }
 
         // GET: Super/Create
         public ActionResult Create()
         {
+            ViewBag.heroId = new SelectList(db.Heroes);
             return View();
         }
 
         // POST: Super/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Hero hero)
         {
             try
             {
